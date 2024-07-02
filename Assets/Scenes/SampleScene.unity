@@ -533,12 +533,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   downGravityModifier: 4
-  upGravityModifier: 4
+  upGravityModifier: 3
   maxJumpHeight: 5
   timeToMaxHeight: 0.5
-  jumpCutOff: 1
-  jumpBuffer: 1
-  coyoteTime: 1
+  jumpCutOff: 3
+  jumpBuffer: 0.2
+  coyoteTime: 0.2
 --- !u!114 &882139964
 MonoBehaviour:
   m_ObjectHideFlags: 0

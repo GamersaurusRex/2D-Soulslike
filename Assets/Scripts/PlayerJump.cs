@@ -36,7 +36,7 @@ public class PlayerJump : MonoBehaviour
     public void HandleJump()
     {                
         HandleInput();
-        DoGroundCheck();        
+        GetGroundCheck();        
         CacheJump();
         CoyoteTime();
     }
@@ -47,7 +47,7 @@ public class PlayerJump : MonoBehaviour
 
         velocity = rb.velocity;
 
-        if(jumpRequest && isGrounded)
+        if(jumpRequest)
         {
             DoAJump();
             rb.velocity = velocity;
@@ -58,13 +58,9 @@ public class PlayerJump : MonoBehaviour
         rb.velocity = velocity;
     }
 
-    private void DoGroundCheck()
+    private void GetGroundCheck()
     {
         isGrounded = groundCheck.IsGrounded();
-        if (isGrounded)
-        {
-            currentlyJumping = false;
-        }
     }
 
     private void HandleInput()
@@ -120,10 +116,12 @@ public class PlayerJump : MonoBehaviour
 
     private void DoAJump()
     {
+        Debug.Log(coyoteTimeCounter);
         //Create the jump, provided we are on the ground, in coyote time
         if (isGrounded || (coyoteTimeCounter > 0.03f && coyoteTimeCounter < coyoteTime))
         {
             jumpRequest = false;
+            currentlyJumping = true;
             jumpBufferCounter = 0;
             coyoteTimeCounter = 0;
 
@@ -144,8 +142,7 @@ public class PlayerJump : MonoBehaviour
             }
 
             //Apply the new jumpSpeed to the velocity. It will be sent to the Rigidbody in FixedUpdate;
-            velocity.y += jumpSpeed;
-            currentlyJumping = true;
+            velocity.y += jumpSpeed;            
         }
 
         if (jumpBuffer == 0)
@@ -161,6 +158,8 @@ public class PlayerJump : MonoBehaviour
         if (isGrounded)
         {
             gravityMultiplier = defaultGravityScale;
+            currentlyJumping = false;
+            return;
         }
 
         //If player is going up--------------------------------------------------
