@@ -839,6 +839,8 @@ MonoBehaviour:
   timeToMaxHeight: 0.5
   downGravityModifier: 4
   upGravityModifier: 1
+  peakGravityModifier: 1
+  velocityAtPeak: 0.01
   jumpCutOff: 4
   jumpBuffer: 0.2
   coyoteTime: 0.2

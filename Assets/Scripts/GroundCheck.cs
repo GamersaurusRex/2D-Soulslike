@@ -13,7 +13,7 @@ public class GroundCheck : MonoBehaviour
     void Update()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheckObject.position, 0.1f, groundLayer);
-        isWalled = Physics2D.OverlapCircle(wallCheckObject.position, 0.3f, wallLayer);
+        isWalled = Physics2D.OverlapCircle(wallCheckObject.position, 0.2f, wallLayer);
     }
 
     public bool IsGrounded()

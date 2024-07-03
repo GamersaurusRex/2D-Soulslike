@@ -10,9 +10,13 @@ public class PlayerJump : MonoBehaviour
 
     [Header("Gravity Settings")]
     [Tooltip("Gravity applied on player after reaching max jump height")]
-    public float downGravityModifier;
+    public float downGravityModifier;           // used to fall down faster
     [Tooltip("Gravity applied on player before reaching max jump height")]
-    public float upGravityModifier;
+    public float upGravityModifier;             // used to rise to the height slower
+    [Tooltip("Gravity applied on player at the max jump height")]
+    public float peakGravityModifier;           // used to get extra hang time at peak
+    [Tooltip("Velocity to check for peak gravity modifer")]
+    public float velocityAtPeak;                // used to set the peak gravity from -this veolicty to +this velocity
     [Tooltip("Gravity applied on player when jump button is released")]
     public float jumpCutOff;
 
@@ -188,7 +192,7 @@ public class PlayerJump : MonoBehaviour
         }
 
         //If player is going up--------------------------------------------------
-        if (rb.velocity.y > 0.01f && currentlyJumping)
+        if (rb.velocity.y > velocityAtPeak && currentlyJumping)
         {
             //Apply upward multiplier if player is rising and holding jump
             if (jumpPressed)
@@ -203,7 +207,7 @@ public class PlayerJump : MonoBehaviour
         }
 
         //Else if going down------------------------------------------------------
-        else if (rb.velocity.y < -0.01f)
+        else if (rb.velocity.y < -velocityAtPeak)
         {
             //Apply the downward gravity multiplier as player comes back to ground
             gravityMultiplier = downGravityModifier;
@@ -212,7 +216,7 @@ public class PlayerJump : MonoBehaviour
         //Else not moving vertically at all----------------------------------------
         else
         {
-            gravityMultiplier = defaultGravityScale;
+            gravityMultiplier = peakGravityModifier;
         }
     }
 }
