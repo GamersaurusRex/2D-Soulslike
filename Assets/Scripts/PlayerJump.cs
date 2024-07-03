@@ -2,12 +2,24 @@ using UnityEngine;
 
 public class PlayerJump : MonoBehaviour
 {
-    public float downGravityModifier;
-    public float upGravityModifier;
+    [Header("Jump Settings")]
+    [Tooltip("Max Jump Height between 1 and 10")]
     public float maxJumpHeight;
+    [Tooltip("Time to reach max jump height between 0.1 and 2.0")]
     public float timeToMaxHeight;
+
+    [Header("Gravity Settings")]
+    [Tooltip("Gravity applied on player after reaching max jump height")]
+    public float downGravityModifier;
+    [Tooltip("Gravity applied on player before reaching max jump height")]
+    public float upGravityModifier;
+    [Tooltip("Gravity applied on player when jump button is released")]
     public float jumpCutOff;
+
+    [Header("Jump Feel Settings")]
+    [Tooltip("Buffer time to allow player to jump again even before landing")]
     public float jumpBuffer;
+    [Tooltip("Buffer time to allow player to jump after falling from a platform")]
     public float coyoteTime;
 
     private bool isGrounded;
@@ -25,16 +37,18 @@ public class PlayerJump : MonoBehaviour
     private Vector2 velocity;
     private Rigidbody2D rb;
     private GroundCheck groundCheck;
+    private PlayerDash dash;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         groundCheck = GetComponent<GroundCheck>();
+        dash = GetComponent<PlayerDash>();
         groundGravity = -2f * maxJumpHeight / (timeToMaxHeight * timeToMaxHeight);
     }
 
     public void HandleJump()
-    {                
+    {        
         HandleInput();
         GetGroundCheck();        
         CacheJump();
@@ -65,13 +79,13 @@ public class PlayerJump : MonoBehaviour
 
     private void HandleInput()
     {
-        if (InputManager.Instance.GetJumpInputDown())
+        if (InputManager.Instance.GetJumpInputDown() && !dash.isDashing)
         {
             jumpRequest = true;
             jumpPressed = true;
         }
 
-        if (InputManager.Instance.GetJumpInputUp())
+        if (InputManager.Instance.GetJumpInputUp() && !dash.isDashing)
         {
             jumpPressed = false;
         }
@@ -79,6 +93,13 @@ public class PlayerJump : MonoBehaviour
 
     private void SetGravityScale()
     {
+        // If player is dashing, deactivate gravity
+        if (dash.isDashing)
+        {
+            gravityMultiplier = 0f;
+            return;
+        }
+
         rb.gravityScale = (groundGravity / Physics2D.gravity.y) * gravityMultiplier;
     }
 
@@ -116,7 +137,6 @@ public class PlayerJump : MonoBehaviour
 
     private void DoAJump()
     {
-        Debug.Log(coyoteTimeCounter);
         //Create the jump, provided we are on the ground, in coyote time
         if (isGrounded || (coyoteTimeCounter > 0.03f && coyoteTimeCounter < coyoteTime))
         {
@@ -154,6 +174,11 @@ public class PlayerJump : MonoBehaviour
 
     private void CalculateGravity()
     {
+        if(dash.isDashing)
+        {
+            return;
+        }
+
         // If player on ground, set gravity to default
         if (isGrounded)
         {

@@ -1,16 +1,18 @@
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
-{
+{    
     private PlayerMovement movement;
     private PlayerJump jump;
-    private PlayerDodge dodge;
+    private PlayerDash dash;
+    private WallJump wallJump;
 
     void Start()
     {
-        movement    = GetComponent<PlayerMovement>();
-        jump        = GetComponent<PlayerJump>();
-        dodge       = GetComponent<PlayerDodge>();
+        movement = GetComponent<PlayerMovement>();
+        jump     = GetComponent<PlayerJump>();
+        dash     = GetComponent<PlayerDash>();
+        wallJump = GetComponent<WallJump>();
     }
 
     void Update()
@@ -21,6 +23,8 @@ public class PlayerController : MonoBehaviour
     void HandlePlayerInput()
     {
         movement.HandleMovement();
-        jump.HandleJump();    
+        jump.HandleJump();
+        dash.HandleDash();
+        wallJump.HandleWallJump();
     }
 }
