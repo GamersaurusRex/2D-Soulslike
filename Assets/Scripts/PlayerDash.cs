@@ -12,20 +12,30 @@ public class PlayerDash : MonoBehaviour
 
     private bool dashInput;
     private bool canDash;    
+    private bool isWalled;    
     private Rigidbody2D rb;
     private TrailRenderer trailRenderer;
+    private GroundCheck groundCheck;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         trailRenderer = GetComponent<TrailRenderer>();
+        groundCheck = GetComponent<GroundCheck>();
         canDash = true;
     }
 
     public void HandleDash()
     {
         dashInput = InputManager.Instance.GetDashInput();
-        
+        isWalled = groundCheck.IsWalled();
+
+        // Cancel dash if player hits a wall
+        if(isWalled && isDashing)
+        {
+            isDashing = false;
+        }
+
         if (dashInput && canDash)
         {
             StartCoroutine(Dash());            

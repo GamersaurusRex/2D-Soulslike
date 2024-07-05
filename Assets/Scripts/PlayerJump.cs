@@ -42,12 +42,14 @@ public class PlayerJump : MonoBehaviour
     private Rigidbody2D rb;
     private GroundCheck groundCheck;
     private PlayerDash dash;
+    private WallJump wallJump;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         groundCheck = GetComponent<GroundCheck>();
         dash = GetComponent<PlayerDash>();
+        wallJump = GetComponent<WallJump>();
         groundGravity = -2f * maxJumpHeight / (timeToMaxHeight * timeToMaxHeight);
     }
 
@@ -178,7 +180,7 @@ public class PlayerJump : MonoBehaviour
 
     private void CalculateGravity()
     {
-        if(dash.isDashing)
+        if(dash.isDashing || wallJump.isWallJumping)
         {
             return;
         }
