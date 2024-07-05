@@ -13,6 +13,7 @@ public class WallJump : MonoBehaviour
     public Vector2 wallJumpPower;
 
     public bool isWallJumping;
+    public bool justWallJumped;
 
     private Rigidbody2D rb;
     private GroundCheck groundCheck;
@@ -24,7 +25,7 @@ public class WallJump : MonoBehaviour
     private bool jumpRequest;
     private bool isWalled;
     private bool isGrounded;
-    private bool isWallSliding;       
+    private bool isWallSliding;
 
     void Start()
     {
@@ -80,7 +81,6 @@ public class WallJump : MonoBehaviour
         {
             isWallJumping = false;
             wallJumpDirection = -transform.localScale.x;
-            Debug.Log("Before " + wallJumpDirection);
             wallJumpTimer = wallJumpBuffer;
 
             CancelInvoke(nameof(StopWallJumping));
@@ -92,9 +92,9 @@ public class WallJump : MonoBehaviour
 
         if(jumpRequest && wallJumpTimer > 0f)
         {
+            
             jumpRequest = false;
             isWallJumping = true;
-            Debug.Log("After " + wallJumpDirection);
             rb.velocity = new Vector2(wallJumpDirection * wallJumpPower.x, wallJumpPower.y);
             wallJumpTimer = 0f;
 
@@ -110,5 +110,12 @@ public class WallJump : MonoBehaviour
     private void StopWallJumping()
     {
         isWallJumping = false;
+        justWallJumped = true;
+        Invoke(nameof(EndJustWallJumped), wallJumpDuration);
+    }
+
+    private void EndJustWallJumped()
+    {
+        justWallJumped = false;
     }
 }

@@ -33,7 +33,9 @@ public class PlayerDash : MonoBehaviour
         // Cancel dash if player hits a wall
         if(isWalled && isDashing)
         {
+            rb.velocity = Vector2.zero;
             isDashing = false;
+            trailRenderer.emitting = false;
         }
 
         if (dashInput && canDash)
@@ -48,10 +50,20 @@ public class PlayerDash : MonoBehaviour
         isDashing = true;
         trailRenderer.emitting = true;
         rb.velocity = new Vector2 (dashSpeed * transform.localScale.x, 0f);
+
+        // Dash for this much time
         yield return new WaitForSeconds(dashTime);
-        isDashing = false;
-        trailRenderer.emitting = false;
+
+        // If still dashing after above time has passed, then stop dash
+        // As if isDashing became false by hitting a wall, no need to reset velocity
+        if (isDashing)
+        { 
+            rb.velocity = Vector2.zero;
+            isDashing = false;
+            trailRenderer.emitting = false;
+        }
+
         yield return new WaitForSeconds(dashCooldown);
-        canDash = true;        
+        canDash = true;
     }
 }

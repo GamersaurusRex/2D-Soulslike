@@ -180,8 +180,21 @@ public class PlayerJump : MonoBehaviour
 
     private void CalculateGravity()
     {
-        if(dash.isDashing || wallJump.isWallJumping)
+        if(dash.isDashing)
         {
+            gravityMultiplier = defaultGravityScale;
+            return;
+        }
+
+        if(wallJump.isWallJumping)
+        {
+            gravityMultiplier = downGravityModifier;
+            return;
+        }
+
+        if(wallJump.justWallJumped && rb.velocity.y > velocityAtPeak)
+        {
+            gravityMultiplier = downGravityModifier;
             return;
         }
 
