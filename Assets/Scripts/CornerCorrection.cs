@@ -65,12 +65,4 @@ public class CornerCorrection : MonoBehaviour
             }
         }
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(LeftOuterPosition, new(LeftOuterPosition.x, LeftOuterPosition.y + verticalRayDistance));
-        Gizmos.DrawLine(LeftInnerPosition, new(LeftInnerPosition.x, LeftInnerPosition.y + verticalRayDistance));
-        Gizmos.DrawLine(RightOuterPosition, new(RightOuterPosition.x, RightOuterPosition.y + verticalRayDistance));
-        Gizmos.DrawLine(RightInnerPosition, new(RightInnerPosition.x, RightInnerPosition.y + verticalRayDistance));
-    }
 }
