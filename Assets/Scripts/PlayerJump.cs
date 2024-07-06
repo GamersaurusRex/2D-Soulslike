@@ -186,8 +186,15 @@ public class PlayerJump : MonoBehaviour
             return;
         }
 
-        if(wallJump.isWallJumping)
+        if (wallJump.isWallSliding)
         {
+            gravityMultiplier = downGravityModifier;
+            return;
+        }
+
+        if (wallJump.isWallJumping)
+        {
+            currentlyJumping = false;
             gravityMultiplier = downGravityModifier;
             return;
         }
@@ -208,7 +215,7 @@ public class PlayerJump : MonoBehaviour
 
         //If player is going up--------------------------------------------------
         if (rb.velocity.y > velocityAtPeak && currentlyJumping)
-        {
+        {            
             //Apply upward multiplier if player is rising and holding jump
             if (jumpPressed)
             {
@@ -229,9 +236,16 @@ public class PlayerJump : MonoBehaviour
         }
 
         //Else not moving vertically at all----------------------------------------
-        else
+        else 
         {
-            gravityMultiplier = peakGravityModifier;
+            if(currentlyJumping)
+            {
+                gravityMultiplier = peakGravityModifier;
+            }
+            else
+            {
+                gravityMultiplier = downGravityModifier; 
+            }
         }
     }
 }

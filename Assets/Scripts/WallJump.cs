@@ -14,6 +14,7 @@ public class WallJump : MonoBehaviour
 
     public bool isWallJumping;
     public bool justWallJumped;
+    public bool isWallSliding;
 
     private Rigidbody2D rb;
     private GroundCheck groundCheck;
@@ -25,7 +26,6 @@ public class WallJump : MonoBehaviour
     private bool jumpRequest;
     private bool isWalled;
     private bool isGrounded;
-    private bool isWallSliding;
 
     void Start()
     {
