@@ -1218,9 +1218,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WallSlideSpeed: 0.1
   wallJumpBuffer: 0.2
-  wallJumpDuration: 0.3
+  wallJumpDuration: 0.2
   wallJumpPower: {x: 30, y: 40}
   isWallJumping: 0
+  justWallJumped: 0
 --- !u!114 &882139970
 MonoBehaviour:
   m_ObjectHideFlags: 0
