@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56012d15b6290946a611dac32fef5ab, type: 3}
+  m_Name: Kitchen Knife
+  m_EditorClassIdentifier: 
+  weaponName: Kitchen Knife
+  isTwoHanded: 0
+  weaponType: Dagger
+  baseDamage: 5
+  range: 1
+  timeBetweenAttacks: 0.5
+  timeBetweenCombos: 1
+  comboCount: 5
+  attackStaminaCost: 5
+  attackManaCost: 0
+  parryWindow: 0.2
+  parryStaminaCost: 5
+  blockStaminaCost: 10
+  specialAbility: Poison
+  manaCostForSpecial: 5
+  cooldownTimeForSpecial: 2
+  weight: 1
+  durability: 100
+  knockback: 0.1
+  criticalHitChance: 0.1
+  criticalHitMultiplier: 2
+  attackSpeedModifier: 1
+  statusEffect: Poison
+  hitboxSize: {x: 1, y: 1}
