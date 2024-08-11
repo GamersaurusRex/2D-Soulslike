@@ -22,6 +22,11 @@ public class InputManager : MonoBehaviour
         return Input.GetAxisRaw("Horizontal");
     }
 
+    public float GetVerticalInput()
+    {
+        return Input.GetAxisRaw("Vertical");
+    }
+
     public bool GetJumpInputDown()
     {
         return Input.GetButtonDown("Jump");

@@ -85,7 +85,7 @@ public class PlayerJump : MonoBehaviour
 
     private void HandleInput()
     {
-        if (InputManager.Instance.GetJumpInputDown() && !dash.isDashing)
+        if (InputManager.Instance.GetJumpInputDown() && !dash.isDashing && InputManager.Instance.GetVerticalInput() >= 0f)
         {
             jumpRequest = true;
             jumpPressed = true;
